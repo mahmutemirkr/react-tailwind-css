@@ -31,7 +31,7 @@ const EventsList = () => {
           <DatePicker
             selected={selectedDate}
             onChange={date => setSelectedDate(date)}
-            dateFormat="yyyy-MM-dd"
+            dateFormat="dd/MM/yyyy"
             className="border border-gray-300 rounded px-2 py-1"
           />
         </div>
