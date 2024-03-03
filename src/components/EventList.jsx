@@ -1,20 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const EventsList = () => {
-  return (
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [events, setEvents] = useState([
+    { date: '2024-03-03', title: 'Etkinlik 1' },
+    { date: '2024-03-10', title: 'Etkinlik 2' },
+    // Diğer etkinlikler buraya eklenebilir
+  ]);
 
-    <div className="min-h-screen bg-gray-100 py-6">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-6">Etkinlikler</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
-            <img className="w-full h-48 object-cover object-center" src="src/assets/img.png" alt="img" />
-            <div className="px-4 py-2">
-              <h2 className="text-lg font-semibold text-gray-800">Title</h2>
-              <p className="text-sm text-gray-600 mt-2">Tarih</p>
-              <p className="text-sm text-gray-600 mt-2">Yer</p>
+  const renderEvents = () => {
+    const filteredEvents = events.filter(event => {
+      const eventDate = new Date(event.date);
+      return eventDate.toDateString() === selectedDate.toDateString();
+    });
+
+    return filteredEvents.map((event, index) => (
+      <div key={index} className="p-2 bg-indigo-200 rounded-md my-1">
+        <p className="text-sm">{event.title}</p>
+      </div>
+    ));
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+      <div className="bg-white rounded-lg shadow-lg p-4">
+        <h2 className="text-2xl font-bold mb-4">Takvim</h2>
+        <div className="flex justify-center items-center mb-4">
+          <DatePicker
+            selected={selectedDate}
+            onChange={date => setSelectedDate(date)}
+            dateFormat="yyyy-MM-dd"
+            className="border border-gray-300 rounded px-2 py-1"
+          />
+        </div>
+        <div className="grid grid-cols-7 gap-1">
+          {['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'].map((day, index) => (
+            <div key={index} className="p-2 border border-gray-300">
+              {day}
             </div>
-          </div>
+          ))}
+          {[...Array(31)].map((_, index) => (
+            <div key={index} className="p-2 border border-gray-300">
+              {index + 1}
+              {events.some(event => {
+                const eventDate = new Date(event.date);
+                return eventDate.getDate() === index + 1;
+              }) && <div className="mt-1">{renderEvents()}</div>}
+            </div>
+          ))}
         </div>
       </div>
     </div>
