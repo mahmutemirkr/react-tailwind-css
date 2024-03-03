@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Create from './pages/Create';
 import CreateList from './pages/CreateList';
+import CreateDetail from './pages/CreateDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MemberList from './pages/MemberLists';
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='/createlist' element={<CreateList />} />
+        <Route path='/createdetail' element={<CreateDetail />} />
         <Route path='/create' element={<Create />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/login' element={<Login />} />
